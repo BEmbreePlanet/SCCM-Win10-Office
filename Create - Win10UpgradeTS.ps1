@@ -141,7 +141,7 @@ Add-CMTaskSequenceStep -TaskSequenceId $TaskSequence.PackageID -Step $ReEnableBi
 
 # Create and add Enable BitLocker step and condition
 $EnableBitLockerCondition = New-CMTaskSequenceStepConditionVariable -ConditionVariableName 'OSDBitLockerStatus' -OperatorType Equals -ConditionVariableValue 'protected'
-$EnableBitLockerStep = New-CMTaskSequenceStepEnableBitLocker -Name 'Enable BitLocker' -Drive 'C:' -Condition $EnableBitLockerCondition
+$EnableBitLockerStep = New-CMTaskSequenceStepEnableBitLocker -Name 'Enable BitLocker' -TpmOnly -Condition $EnableBitLockerCondition
 Set-CMTaskSequenceGroup -TaskSequenceId $TaskSequence.PackageID -StepName 'Re-Enable BitLocker' -AddStep $EnableBitLockerStep
 
 # Create Set TS Resiliency Group
@@ -186,7 +186,7 @@ $SetDefaultApplicationsStep = New-CMTaskSequenceStepRunCommandLine -Name 'Set De
 Set-CMTaskSequenceGroup -TaskSequenceId $TaskSequence.PackageID -AddStep $SetDefaultApplicationsStep -StepName 'Set Windows Default Apps and Associations'
 
 # Create Modify Start Menu and Taskbar Step
-$ModifyStartMenuandTaskbarStep = New-CMTaskSequenceStepRunCommandLine -Name 'Modify Start Menu and Taskbar' -CommandLine 'xcopy "LayoutModification.xml" "C:\Users\Default\AppData\Local\Microsoft\Windows\Shell" /R /Y' -Description 'Add LayoutModification.xml file package content' -Disable
+$ModifyStartMenuandTaskbarStep = New-CMTaskSequenceStepRunCommandLine -Name 'Modify Start Menu and Taskbar' -CommandLine 'Placeholder for RUN POWERSHELL SCRIPT STEP to run ImportStartMenu.ps1' -Description 'Placeholder for RUN POWERSHELL SCRIPT STEP to run ImportStartMenu.ps1' -Disable
 Set-CMTaskSequenceGroup -TaskSequenceId $TaskSequence.PackageID -AddStep $ModifyStartMenuandTaskbarStep -StepName 'Apply Customizations and Personalizations' -InsertStepStartIndex 0
 
 # Create Apply Local Group Policy Settings Step
