@@ -209,3 +209,7 @@ Set-CMTaskSequenceGroup -TaskSequenceId $TaskSequence.PackageID -AddStep $Conver
 # Create Last Restart Computer Step for Configure UEFI Group
 $LastRestartComputerStep = New-CMTaskSequenceStepReboot -Name 'Restart Computer' -RunAfterRestart HardDisk -NotificationMessage '' -Disable
 Set-CMTaskSequenceGroup -TaskSequenceId $TaskSequence.PackageID -AddStep $LastRestartComputerStep -StepName 'Configure UEFI'
+
+# Create Setup Diag Command line step
+$SetupDiagStep = New-CMTaskSequenceStepRunCommandLine -Name 'Run Setup Diag' -CommandLine 'SetupDiag.exe /Output:"%_SMSTSLogPath%\SetupDiageResults.log" /Mode:Online' -Description '!ADD SETUPDIAG PACKAGE!'
+Set-CMTaskSequenceGroup -TaskSequenceId $TaskSequence.PackageID -AddStep $SetupDiagStep -StepName 'Run Diagnostic Tools'
